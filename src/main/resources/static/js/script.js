@@ -1,14 +1,29 @@
 /* bind the on-change event for the input element (triggered when a file
  is chosen) */
+var headerLength = 0;
 $(document).ready(function() {
     $("#upload-file").on("change", uploadFile);
 
     //After we have received the headers from the server
+    var i = 0;
    $('.btn-add').click(function () {
-       $('.criteria:first-child').clone().appendTo('.select-box');
+       if(i<headerLength-1) {
+           $('.criteria-percent:first-child').clone().appendTo('.select-box');
+           i = i + 1;
+       }
+       else{
+           $('.btn-add').hide();
+       }
    });
-
+    sendCriteria();
 });
+
+/**
+ * Send grade distribution criteria via Ajax to the Spring Boot server.
+ */
+function sendCriteria() {
+    
+}
 
 /**
  * Upload the file sending it via Ajax at the Spring Boot server.
@@ -48,6 +63,7 @@ function uploadFile() {
     $.each(headers, function(i,p){
        $('.criteria').append($('<option></option>').val(p).html(p));
     });
+    headerLength = headers.length;
 
 } // function uploadFile
 /**
