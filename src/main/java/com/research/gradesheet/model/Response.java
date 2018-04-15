@@ -4,12 +4,10 @@ public class Response {
 
     private String RESULT;
     private String URL;
-    private String doc;
 
-    public Response(String RESULT, String URL, String doc) {
+    public Response(String RESULT, String URL) {
         this.RESULT = RESULT;
         this.URL = URL;
-        this.doc = doc;
     }
 
     public String getRESULT() {
@@ -20,7 +18,11 @@ public class Response {
         return URL;
     }
 
-    public String getDoc() {
-        return doc;
+    public void setRESULT(String RESULT) {
+        this.RESULT = RESULT;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 }

@@ -3,6 +3,8 @@ package com.research.gradesheet.service;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.io.File;
@@ -15,6 +17,8 @@ public class SheetEditService {
 
     private final String filePath = "D:/CSE 487/gradesheet/uploadedFiles/grade.xlsx";
     private Sheet sheet;
+
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public SheetEditService()throws IOException, InvalidFormatException{
         Workbook workbook = WorkbookFactory.create(new File(filePath));
@@ -32,6 +36,9 @@ public class SheetEditService {
             if((cell.getCellTypeEnum()).equals(CellType.STRING))
                 headers.add(cell.getStringCellValue());
         }
+
+        for(String t:headers)
+            logger.info(t);
 
         return headers;
     }
