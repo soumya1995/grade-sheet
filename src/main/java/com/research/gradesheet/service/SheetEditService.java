@@ -15,17 +15,16 @@ import java.util.Iterator;
 
 public class SheetEditService {
 
-    private final String filePath = "D:/CSE 487/gradesheet/uploadedFiles/grade.xlsx";
     private Sheet sheet;
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public SheetEditService()throws IOException, InvalidFormatException{
+    public SheetEditService(String filePath)throws IOException, InvalidFormatException{
         Workbook workbook = WorkbookFactory.create(new File(filePath));
         sheet = workbook.getSheetAt(0);
     }
 
-    public ArrayList<String> getColumnHeaders(){
+    public ArrayList<String> getAllColumnHeaders(){
 
         ArrayList<String> headers = new ArrayList<>();
 
@@ -37,9 +36,19 @@ public class SheetEditService {
                 headers.add(cell.getStringCellValue());
         }
 
-        for(String t:headers)
-            logger.info(t);
+        return headers;
+    }
 
+    public ArrayList<String> getUsefulColumnHeaders(){
+
+        ArrayList<String> headers = new ArrayList<>();
+
+        ArrayList<String> allHeaders = this.getAllColumnHeaders();
+        for(String h:allHeaders){
+            String lowerH = h.toLowerCase();
+            if(lowerH.startsWith("homework") || lowerH.startsWith("quiz") || lowerH.startsWith("midterm") || lowerH.startsWith("final") || lowerH.contains("project"))
+                headers.add(h);
+        }
         return headers;
     }
 

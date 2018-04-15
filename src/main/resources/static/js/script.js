@@ -3,6 +3,11 @@
 $(document).ready(function() {
     $("#upload-file").on("change", uploadFile);
 
+    //After we have received the headers from the server
+   $('.btn-add').click(function () {
+       $('.criteria:first-child').clone().appendTo('.select-box');
+   });
+
 });
 
 /**
@@ -35,7 +40,14 @@ function uploadFile() {
 
     });
 
-    viewSheet(res.responseText);
+    //Process the response; extract the url
+    var response = JSON.parse(res.responseText);
+    viewSheet(response["url"]);
+    var headers = response["headers"];
+    $('.criteria').empty();
+    $.each(headers, function(i,p){
+       $('.criteria').append($('<option></option>').val(p).html(p));
+    });
 
 } // function uploadFile
 /**
